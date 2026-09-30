@@ -1,4 +1,11 @@
 <?php
+variables([
+	socialBuilder::variableName => socialBuilder::create()
+		->addImranPersonal()->addHR()
+		->append(socialBuilder::default())
+		->getItems(),
+]);
+
 setup_cdn();
 if (nodeIs(SITEHOME))
 	setHtmlVariable(VARWelcomeMessage, getSnippet('welcome'));

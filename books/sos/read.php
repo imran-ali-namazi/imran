@@ -2,7 +2,7 @@
 $pages = explode(NEWLINE . '---' . NEWLINE, disk_file_get_contents(__DIR__ . '/data/contents.md'));
 $links = getSheet(__DIR__ . '/data/links.tsv', false);
 
-$printMode = getQueryParameter('content');
+$printMode = getQueryParameter(VARQueryContent);
 $linkReplaces = [];
 $pageClass = 'container my-4' . ($printMode ? ' plain' : '');
 $titleClass = ' text-center title-page';

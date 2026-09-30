@@ -1,3 +1,3 @@
 <?php
-if (getPageParameterAt() == 'read' && getQueryParameter('content'))
-	addStyle('print', COREASSETS);
+if (getPageParameterAt() == 'read' && getQueryParameter(VARQueryContent))
+	addStyle('print', assetManager::core);

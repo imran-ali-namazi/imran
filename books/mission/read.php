@@ -1,6 +1,6 @@
 <?php
 $pages = explode(NEWLINE . '---' . NEWLINE, disk_file_get_contents(__DIR__ . '/data/contents.md'));
-$printMode = getQueryParameter('content');
+$printMode = getQueryParameter(VARQueryContent);
 $pageClass = 'container my-4' . ($printMode ? ' plain' : '');
 $titleClass = ' text-center title-page';
 $breakReplaces = !$printMode ? [] : ['<p><!--page-break--></p>' => $breakWith = '&hellip; continued</div><div class="new-page ' . $pageClass . '">', '<!--page-break-->' => $breakWith];

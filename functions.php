@@ -111,26 +111,13 @@ function _getTaxonomyText($val, $type) {
 
 //sets inner node for more/with-ai/
 function site_before_render() {
-	if (sectionIs('books') || sectionIs('whois'))
+	if (sectionIs('books') || sectionIs('whois') || sectionIs('journal'))
 		autosetPageMenu([VARDontOverwriteLogo => true, VARLinkToNodeHome => true, VARLinkToSubnodeHome => true]);
 
 	if (getQueryParameter(VARQueryContent)) {
 		add_body_class(cssUX::pt4);
 		setSubTheme(VARSubthemeContentOnly);
 	}
-
-	$section = variable(SECTIONVAR);
-	$node = variable(NODEVAR);
-
-	if (true || $section == $node) return;
-
-	DEFINE('NODEPATH', SITEPATH . '/' . variable(SECTIONVAR) . '/' . $node);
-	variables([
-		VARNodeSiteName => humanizeThis(),
-		VARNodeSafeName => $node,
-		VARSubmenuAtNode => true,
-		VARNodesHaveFiles => true,
-	]);
 }
 
 //================================================

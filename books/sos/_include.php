@@ -1,6 +1,6 @@
 <?php
-if (getPageParameterAt() == 'read' && getQueryParameter('content'))
-	addStyle('print', COREASSETS);
+if (getPageParameterAt() == 'read' && getQueryParameter(VARQueryContent))
+	addStyle('print', assetManager::core);
 
 if (getPageParameterAt() == 'go' && $to = getPageParameterAt(2)) {
 	$links = getSheet(__DIR__ . '/data/links.tsv', false);
