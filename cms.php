@@ -10,6 +10,8 @@ setup_cdn();
 if (nodeIs(SITEHOME))
 	setHtmlVariable(VARWelcomeMessage, getSnippet('welcome'));
 
+variable('navigableSections', sectionIs('books') || sectionIs('whois') || sectionIs('journal') || sectionIs('2007') || sectionIs('2005'));
+
 function did_site_render_page() {
 	if (variable('hasPiece')) {
 		renderAny(variable('file'));
@@ -36,6 +38,12 @@ function before_file() {
 }
 
 function after_file() {
+	if (variable('navigableSections')) {
+		variable('dir_skip_node', true);
+		features::ensureDirectory();
+		return;
+	}
+
 	if (variable('hasPiece')) {
 		$current = variable('currentPiece');
 

@@ -1,0 +1,11 @@
+|is-table
+||cloneAt: amadeusweb/people/imran/
+||renderWith: repos.php
+||Description: Seeding an Internet of Missions
+||Primary Keyword: DAWN
+||Keywords: Internet of Missions, Dynamic AmadeusWeb Network
+#at	from
+	https://github.com/imran-ali-namazi/imran.git
+2026	https://github.com/imran-ali-namazi/2026.git
+2025	https://github.com/imran-ali-namazi/2025.git
+2007	https://github.com/imran-ali-namazi/2007.git

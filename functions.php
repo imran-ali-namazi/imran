@@ -111,7 +111,7 @@ function _getTaxonomyText($val, $type) {
 
 //sets inner node for more/with-ai/
 function site_before_render() {
-	if (sectionIs('books') || sectionIs('whois') || sectionIs('journal'))
+	if (variable('navigableSections'))
 		autosetPageMenu([VARDontOverwriteLogo => true, VARLinkToNodeHome => true, VARLinkToSubnodeHome => true]);
 
 	if (getQueryParameter(VARQueryContent)) {
