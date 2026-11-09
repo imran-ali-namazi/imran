@@ -51,6 +51,8 @@ function after_file() {
 		$img = disk_file_exists(SITECDNPATH . ($jpg = 'writing/pieces/' . urlize($current['Name']) . '.jpg')) ? getHtmlVariable('cdn') . $jpg  : false;
 		if ($img) echo $imgStart . $img . $imgEnd;
 
+		renderMedia($current['Name'], true);
+
 		$onlyMain = getQueryParameter(VARQueryContent);
 		if (!$onlyMain && $item = variable('nextPiece'))
 			printPiece($item, 'after', false, 'Next');

@@ -11,6 +11,36 @@ variable(TAXONOMY, [
 	//'people' => 'Dedication',
 ]);
 
+function renderMedia($piece, $inPiece = false) {
+	$items = valueIfSet(($sheet = getSheet('media', 'Piece'))->group, $piece);
+	if (!$items) return;
+
+	$url = replaceHtml('%url%') . urlize($piece) . '/';
+
+	if ($inPiece) contentBox('media', cssUX::container);
+	h2($inPiece ? getLink('Media', pageUrl('media')) : getLink($piece, $url));
+
+	$useHr = count($items) > 1;
+
+	foreach ($items as $item) {
+		if ($useHr) echo HRTAG;
+
+		echo replaceItems('<h3 class="m-0">%date%</h3>%0%<p class="m-0 mb-2">%description%</p>%0%<b>credits</b>:%credits%' . BRNL . BRNL, [NEWLINE,
+			'date' => $sheet->getValue($item, 'Date'),
+			'description' => $sheet->getValue($item, 'Description'),
+			'credits' => $sheet->getValue($item, 'Credits'),
+		], WRAPREPLACE);
+
+		if ($media = $sheet->getValue($item, 'Media')) {
+			$macro = $sheet->getValue($item, 'Macro');
+			echo runAllMacros(replaceItems('[%macro%]%media%[/%macro%]' . NEWLINE, ['macro' => $macro, 'media' => $media], WRAPREPLACE));
+		} else {
+			echo 'MEDIA NOT FOUND' . NEWLINE;
+		}
+	}
+	if ($inPiece) contentBox('end');
+}
+
 function renderMetaPage($slug) {
 	$name = getQueryParameter(VARQueryName);
 	$headings = getQueryParameter(VARQueryHeadings);
