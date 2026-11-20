@@ -2,7 +2,7 @@ An email I wrote to Richard Bach on Jul 20th 2019. It's full of references to hi
 
 <a href="https://groups.google.com/g/yieldmore/c/eNsJIVfV8NY" target="_blank">Foreword on Google Groups</a>
 
-<div class="video-container"><iframe src="https://www.youtube.com/embed/l0zLvHm5-Pw" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+[youtube ]l0zLvHm5-Pw[ /youtube]
 
 Is it time to pass Taminder's legacy on to a human of ferret origins?
 

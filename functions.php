@@ -11,20 +11,24 @@ variable(TAXONOMY, [
 class special {
 	const All = [
 		'for' => [
-			['slug' => 'divine', 'name' => 'Divine', 'in' => ['God', 'MSA']],
-			['slug' => 'preceptors', 'name' => 'Preceptors', 'in' => ['Uma', 'Shayesteh', 'Vichu', 'Mir Momin Ali', 'SKY', 'Raji', 'Jyothi']],
-			['slug' => 'girl', 'name' => 'Girl', 'in' => ['Lace', 'Princess', 'Kiddo']],
-			['slug' => 'muses', 'name' => 'All Muses', 'in' => ['Gina', 'Kiddo', 'Sandra', 'Lace', 'Dreamy', 'Princess']],
+			['slug' => 'divine', 'in' => ['God', 'MSA']],
+			['slug' => 'preceptors', 'in' => ['Uma', 'Shayesteh', 'Vasantha', 'Vichu', 'Mir Momin Ali', 'Asha P', 'Vijaya', 'SKY', 'Raji', 'Jyothi']],
+			['slug' => 'girl', 'in' => ['Lace', 'Princess', 'Kiddo']],
+			['slug' => 'muses', 'in' => ['Gina', 'Patricia', 'Tracey', 'Kiddo', 'Sandra', 'Lace', 'Dreamy', 'Princess']],
+			['slug' => 'good-friends', 'in' => ['Anusha', 'Ashwin', 'Bidisha', 'Bharath M', 'Fehmida', 'Gypsy', 'Mona', 'John R', 'Jyothi', 'Sama', 'Shobi', 'Shyam', 'Srividya', 'Usha S', 'Veena', 'Yogesh']],
+			['slug' => 'more-friends', 'in' => ['Abigail S', 'Gary', 'Kavitha', 'Keerthi', 'Lee', 'Meggha', 'Mohan Ram', 'Poonam', 'Prabu S', 'Rahul', 'Ravee', 'Reuben', 'Reza', 'Rubeena', 'Samir', 'Shabana', 'SSD', 'Vidya Shankar', 'Vishnu Vasu']],
+			['slug' => 'famous-people', 'in' => ['Ali', 'Gene Roddenberry', 'Louise L Hay', 'Philip Pullman', 'Remzi', 'Richard Bach', 'Robin William', 'Robert Redford', 'Roger Waters', 'Simon', 'Tolkien']],
 		],
 		'categories' => [
-			['slug' => 'harmony', 'name' => 'Harmony', 'in' => ['Daivic', 'Devotional', 'Ethos', 'Gratitude', 'Imagine', 'Mirth', 'One World', 'Religion', 'Spirit']],
-			['slug' => 'celebrate', 'name' => 'Celebrations', 'in' => ['Birthdays', 'Friends', 'Soulful Dancing']],
-			['slug' => 'grieving', 'name' => 'Grieving', 'in' => ['Death', 'Grief', 'Mrityunjay']],
-			//['slug' => '', 'name' => '', 'in' => []],
+			['slug' => 'harmony', 'in' => ['Daivic', 'Devotional', 'Ethos', 'Gratitude', 'Imagine', 'Mirth', 'One World', 'Religion', 'Spirit']],
+			['slug' => 'celebrations', 'in' => ['Birthdays', 'Friends', 'Soulful Dancing']],
+			['slug' => 'grieving', 'in' => ['Death', 'Grief', 'Mrityunjay']],
+			//['slug' => '', 'in' => ['', ]],
 		],
 	];
 
 	const BannerName = 'special-banner';
+	private const expand = '<i title="Expand All Pieces" class="fa fa-envelope-open-text"></i>';
 
 	static function banner($result = false, $name = false) {
 		$all = [];
@@ -39,17 +43,22 @@ class special {
 			if (!$name) $name = humanize(getPageParameterAt());
 			$slug = $result['Slug'];
 			$items = [variable(TAXONOMY)[$slug] . ': '];
-			foreach ($result['in'] as $item)
-				$items[] = getLink($item, pageUrl($slug . '/' . urlize($item)), bootstrapAndUX::button($name == $item ? bootstrapAndUX::success : bootstrapAndUX::primary));
-			$suffix = HRTAG . implode(' ', $items);
+			foreach ($result['in'] as $item) {
+				$suffix = $name == $item ? NEWLINE . getLink(self::expand, pageUrl($slug . '/' . urlize($item) . '/?expand=2') . NOFOLLOWSUFFIX, bootstrapAndUX::button(getQueryParameter('expand') ? bootstrapAndUX::danger : bootstrapAndUX::info) . ' m-1') : '';
+				$items[] = getLink($item, pageUrl($slug . '/' . urlize($item)), bootstrapAndUX::button($name == $item ? bootstrapAndUX::success : bootstrapAndUX::primary) . ' m-1') . $suffix;
+			}
+			$suffix = HRTAG . implode(NEWLINE, $items);
 		}
 
-		return bootstrapAndUX::colouredDiv('WRITING: ' . implode(' ', $all) . $suffix, cssUX::concat(bootstrapAndUX::warning, cssUX::CenterContainer, 'rounded-5'));
+		return bootstrapAndUX::colouredDiv('WRITING: ' . implode(NEWLINE, $all) . $suffix, cssUX::concat(bootstrapAndUX::warning, cssUX::CenterContainer, 'rounded-5'));
 	}
 
 	private static function link($item, $on = false) {
 		if (!$on) $on = getPageParameterAt();
-		return getLink($item['name'], pageUrl('all/' . $item['slug']), bootstrapAndUX::buttonLarge($on == $item['slug'] ? bootstrapAndUX::success : bootstrapAndUX::primary) . ' m-1');
+		$result = getLink(humanize($item['slug']), pageUrl('all/' . $item['slug']), bootstrapAndUX::buttonLarge($on == $item['slug'] ? bootstrapAndUX::success : bootstrapAndUX::primary) . ' m-1');
+		if ($on == $item['slug'])
+			$result .= ' ' . getLink(self::expand, pageUrl('all/' . $item['slug'] . '/?expand=1') . NOFOLLOWSUFFIX, bootstrapAndUX::buttonLarge(getQueryParameter('expand') == '1' ? bootstrapAndUX::danger : bootstrapAndUX::info) . ' m-1');
+		return $result;
 	}
 
 	static function matchesWork($piece) {
@@ -175,8 +184,8 @@ function renderMetaPage($slug) {
 
 		if (!$headings) $res .= NEWLINE . implode(NEWLINE, array_map(function($piece) {
 			$sheet = variable('sheet');
-			return getLink($sheet->getValue($piece, 'SNo') . ' ' . $sheet->getValue($piece, 'Name'),
-				$link = pageUrl(urlize($sheet->getValue($piece, 'Name'))), 'btn btn-outline-info m-2 ms-0')
+			return getLink($sheet->getSNo($piece) . ' ' . $sheet->getName($piece),
+				$link = pageUrl(urlize($sheet->getName($piece))), 'btn btn-outline-info m-2 ms-0')
 				. ' ' . getLinkWithCustomAttr('**', $link . '?content=1', ' data-lightbox="iframe" class="btn btn-outline-info"')
 				. ' ' . $sheet->getDescription($piece) . BRTAG;
 		}, $rows));
@@ -213,6 +222,8 @@ function printPiece($item, $where, $xofy = false, $relative = '') {
 		'<label>Work: </label> ' . getLink(_getTaxonomyText($item['Work'], 'work'), urlFromSlugs('works', $item['Work'])),
 		'<label>Rhymes: </label> ' . $item['RhymeScheme'],
 	]) . NEWLINE . '</li></div>' . BRNL;
+
+	if (getQueryParameter('expand')) renderAny($item['File']);
 
 	if ($where != 'before' && $where != 'embed')
 		contentBox('end');
@@ -280,6 +291,10 @@ class sitemapTsv extends sheet {
 
 	function getDescription($item) {
 		return $this->getValue($item, 'Description');
+	}
+
+	function getSNo($item) {
+		return $this->getValue($item, 'SNo');
 	}
 }
 
