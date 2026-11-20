@@ -237,8 +237,7 @@ function _getTaxonomyText($val, $type) {
 
 //sets inner node for more/with-ai/
 function site_before_render() {
-	if (in_array(sectionValue(), ['books', 'whois', 'journal', '2007', '2005']))
-		autosetPageMenu([VARDontOverwriteLogo => true, VARLinkToNodeHome => true, VARLinkToSubnodeHome => true]);
+	autosetPageMenu([VARDontOverwriteLogo => true, VARLinkToNodeHome => true, VARLinkToSubnodeHome => true]);
 
 	if (getQueryParameter(VARQueryContent)) {
 		add_body_class(cssUX::pt4);

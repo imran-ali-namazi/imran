@@ -7,6 +7,7 @@ variables([
 	replacer::siteReplaces => [
 		'special-links' => special::banner(),
 	],
+	'SkipSitemap' => ['poems', 'prose'],
 ]);
 
 setup_cdn();
