@@ -5,11 +5,107 @@ variable(TAXONOMY, [
 	'works' => 'Work',
 	'collections' => 'Collection',
 	'categories' => 'Category',
-	//'for-person' => 'Dedication',
-	//remove?
 	'for' => 'Dedication',
-	//'people' => 'Dedication',
 ]);
+
+class special {
+	const All = [
+		'for' => [
+			['slug' => 'divine', 'name' => 'Divine', 'in' => ['God', 'MSA']],
+			['slug' => 'preceptors', 'name' => 'Preceptors', 'in' => ['Uma', 'Shayesteh', 'Vichu', 'Mir Momin Ali', 'SKY', 'Raji', 'Jyothi']],
+			['slug' => 'girl', 'name' => 'Girl', 'in' => ['Lace', 'Princess', 'Kiddo']],
+			['slug' => 'muses', 'name' => 'All Muses', 'in' => ['Gina', 'Kiddo', 'Sandra', 'Lace', 'Dreamy', 'Princess']],
+		],
+		'categories' => [
+			['slug' => 'harmony', 'name' => 'Harmony', 'in' => ['Daivic', 'Devotional', 'Ethos', 'Gratitude', 'Imagine', 'Mirth', 'One World', 'Religion', 'Spirit']],
+			['slug' => 'celebrate', 'name' => 'Celebrations', 'in' => ['Birthdays', 'Friends', 'Soulful Dancing']],
+			['slug' => 'grieving', 'name' => 'Grieving', 'in' => ['Death', 'Grief', 'Mrityunjay']],
+			//['slug' => '', 'name' => '', 'in' => []],
+		],
+	];
+
+	const BannerName = 'special-banner';
+
+	static function banner($result = false, $name = false) {
+		$all = [];
+		$on = $result ? $result['slug'] : false;
+		foreach (self::All as $items) {
+			foreach ($items as $item)
+				$all[] = self::link($item, $on);
+		}
+
+		$suffix = '';
+		if ($result) {
+			if (!$name) $name = humanize(getPageParameterAt());
+			$slug = $result['Slug'];
+			$items = [variable(TAXONOMY)[$slug] . ': '];
+			foreach ($result['in'] as $item)
+				$items[] = getLink($item, pageUrl($slug . '/' . urlize($item)), bootstrapAndUX::button($name == $item ? bootstrapAndUX::success : bootstrapAndUX::primary));
+			$suffix = HRTAG . implode(' ', $items);
+		}
+
+		return bootstrapAndUX::colouredDiv('WRITING: ' . implode(' ', $all) . $suffix, cssUX::concat(bootstrapAndUX::warning, cssUX::CenterContainer, 'rounded-5'));
+	}
+
+	private static function link($item, $on = false) {
+		if (!$on) $on = getPageParameterAt();
+		return getLink($item['name'], pageUrl('all/' . $item['slug']), bootstrapAndUX::buttonLarge($on == $item['slug'] ? bootstrapAndUX::success : bootstrapAndUX::primary) . ' m-1');
+	}
+
+	static function matchesWork($piece) {
+		$tax = variable(TAXONOMY);
+		foreach (self::All as $thisTax => $items) {
+			foreach ($items as $item) {
+				$name = $piece[$tax[$thisTax]];
+				if (in_array($name, $item['in']))
+					return self::enrich($item, $thisTax);
+			}
+		}
+		return false;
+	}
+
+	static function setup($node, $on) {
+		$specialTax = isset(self::All[$node]);
+		$name = humanize($on);
+
+		$result = false;
+		$tax = false;
+
+		$allSpecial = self::All;
+		if ($node == 'all' || $specialTax) {
+			if ($specialTax) $allSpecial = [$node => self::All[$node]];
+			foreach ($allSpecial as $thisTax => $items) {
+				foreach ($items as $item) {
+					if ($node == 'all' && $item['slug'] == $on) {
+						$tax = $thisTax;
+						$result = $item;
+					}
+
+					if ($node != 'all' && $thisTax != $node)
+						continue;
+
+					if (in_array($name, $item['in'])) {
+						$tax = $thisTax;
+						$result = $item;
+					}
+				}
+			}
+		}
+
+		if ($result) self::enrich($result, $tax);
+
+		if ($node == 'all' || $result)
+			variable(self::BannerName, self::banner($result));
+
+		return $result;
+	}
+
+	private static function enrich(&$result, $tax) {
+		$result['Slug'] = $tax;
+		$result['Field'] = variable(TAXONOMY)[$tax];
+		return $result;
+	}
+}
 
 function renderMedia($piece, $inPiece = false) {
 	$items = valueIfSet(($sheet = getSheet('media', 'Piece'))->group, $piece);
@@ -190,7 +286,7 @@ class sitemapTsv extends sheet {
 
 //1 - piece checking happens here
 function beforeSectionSet() {
-	$node = variable(VARNode);
+	$node = nodeValue();
 
 	$tax = variable(TAXONOMY);
 	$isHelper = startsWith($node, '_');
@@ -213,6 +309,10 @@ function beforeSectionSet() {
 
 		$currentIndex = $indicesByName[$sheet->getName($item)];
 		$current = $sheet->enrichedPiece($item);
+
+		$match = special::matchesWork($current);
+		if ($match) variable(special::BannerName, special::banner($match, $current[$match['Field']]));
+
 		$previous = $currentIndex > 0 ? $sheet->enrichedPiece($ofSameWork[$currentIndex - 1]) : false;
 		$next = $currentIndex < count($ofSameWork) -1 ? $sheet->enrichedPiece($ofSameWork[$currentIndex + 1]) : false;
 
@@ -228,28 +328,37 @@ function beforeSectionSet() {
 		return true;
 	}
 
-	if ($node == 'works')
+	$on = getPageParameterAt();
+	$special = special::setup($node, $on);
+
+	$isSpecial = $special != false;
+	$doSpecial = $isSpecial && $node == 'all';
+
+	if ($doSpecial)
+		$sheet = sitemapTsv::read(false);
+	else if ($node == 'works')
 		$sheet = $byWork;
 	else if (array_key_exists($node, $tax))
 		$sheet = sitemapTsv::read($tax[$node], true);
 	else if ($isPseudo || $isHelper)
 		$sheet = sitemapTsv::read(false);
 
-	$on = getPageParameterAt(1);
-
 	if ($isTax) {
-		if (!isset($sheet->group[$on]))
+		if (!$isSpecial && !isset($sheet->group[$on]))
 			return false;
 		if ($on)
 			variable('skip-content-render', true);
 	}
 
-	$items = $isPseudo || $isHelper ? $sheet->rows : $sheet->group[$on];
+	$items = $isPseudo || $isHelper || $doSpecial ? $sheet->rows : $sheet->group[$on];
 	$pieces = [];
 	foreach ($items as $item) {
 		$obj = $sheet->enrichedPiece($item);
 		if ($isHelper) continue;
-		if ($isPseudo && $node != 'all' && $node != $obj['Type']) continue;
+		$specialMatch = $isSpecial && in_array($obj[$special['Field']], $special['in']);
+		if ($isSpecial && !$specialMatch) continue;
+		if ($specialMatch && $node != 'all') $specialMatch = false;
+		if (!$specialMatch && $isPseudo && $node != 'all' && $node != $obj['Type']) continue;
 		$pieces[] = $obj;
 	}
 

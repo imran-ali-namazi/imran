@@ -12,7 +12,7 @@ To SHE (The Mother, Mirra Alfassa), that incarnate of the 4 Shaktis - who causes
 
 ---
 
-Mostly zest, gaity and courage to FACE LIFE on equal footing, and to remember always that life is always about the moments we live - not SQUANDER on our pettinesses and inability to love completely.
+Mostly zest, gaity and courage to FACE LIFE on equal footing, and to remember always that life is always about the moments we live - not SQUANDER on our pettinesses and inability to love completely.<!--more-->
 
 Love completely with the whole of your soul. Love unto eternity and BEYOND - [Until Many many days of Brahma have passed and you realize the IMMORTALITY of every SOUL].
 

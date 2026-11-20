@@ -4,6 +4,9 @@ variables([
 		->addImranPersonal()->addHR()
 		->append(socialBuilder::default())
 		->getItems(),
+	replacer::siteReplaces => [
+		'special-links' => special::banner(),
+	],
 ]);
 
 setup_cdn();
@@ -24,12 +27,14 @@ function did_site_render_page() {
 function before_file() {
 	if (variable('hasPiece')) {
 		printSpacer(humanizeThis());
+		if ($banner = variable(special::BannerName)) echo $banner;
+
 		printPiece(variable('currentPiece'), 'before');
 	} else if (variable('hasPieces')) {
-		echo '<hr class="m-2" />';
 		$pp1 = getPageParameterAt();
 		$suffix = $pp1 ? ' &mdash;> ' . humanize($pp1) : '';
 		printSpacer(humanizeThis() . $suffix);
+		if ($banner = variable(special::BannerName)) echo $banner;
 
 		$count = count(variable('currentPieces'));
 		foreach (variable('currentPieces') as $ix => $item)

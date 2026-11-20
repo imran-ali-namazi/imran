@@ -4,7 +4,7 @@ Inspired by Field of Dreams and Auroville, I've been fortunate to have had, over
 
 Fight for good, remembering that the devil is on the ropes and that our Effulgent Mother, Bagalamukhi will soon silence the rabid spewers of hatred, divisiveness and confusion and have us all instead sing a new Anthem of Hope and Humanity.
 
-The time can be now for our Divinity to shine forth, so let the Earth scream an agonizing prayer to the Supramental to unleash that Power Supreme in us all. 
+The time can be now for our Divinity to shine forth, so let the Earth scream an agonizing prayer to the Supramental to unleash that Power Supreme in us all.<!--more-->
 
 Sincerely pray for the coming DAWN and the hope and succour it gives. Let's build an Internet of Missions as we rediscover our illimitable origins.
 

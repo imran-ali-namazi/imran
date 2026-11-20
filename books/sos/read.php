@@ -30,8 +30,8 @@ foreach ($links->rows as $item) {
 
 	$url_r = str_replace($links->values['prefix'], '', $url);
 	$url = replaceHtml($url);
-	$link = markdown('[' . $url_r . '](' . $url . '~~TARGETNEW)');
-	$go = markdown('[GO: ' . $no . '](' . pageUrl(nodeValue() . '/go/' . $no) . '~~TARGETNEW)');
+	$link = markdown('[' . $url_r . '](' . $url . 'NEWTAB)');
+	$go = markdown('[GO: ' . $no . '](' . pageUrl(nodeValue() . '/go/' . $no) . 'NEWTAB)');
 	$linkReplaces['<!--link/' . $no . '/link-->']
 		= $link . BRNL . 'image#todo-qrcode-' . $no . BRNL . $go;
 }

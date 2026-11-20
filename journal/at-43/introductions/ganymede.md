@@ -1,17 +1,15 @@
-Hi,
-
-I am Imran, 42, sensitive social minded guy who has been working as a writer/thinker since college (2005). I was working in IT until 2022, now looking to collaborate with multiple communities aligned with a vision that a brighter world is possible.
+I am a sensitive social minded guy who has been working as a writer/thinker since college (2005). I was working in IT until 2022, now looking to collaborate with multiple communities aligned with a vision that a brighter world is possible.
 
 I run a network called [amadeusweb.in](%urlOf-root%) with over 1000 pages (including my poetry and writing and ai chats) and 20 sites - [amadeusweb.in/projects/](%urlOf-root%projects/)
 
 My ideas for families / youth are mainly at
-[ganymede.amadeusweb.in](%%) - specifically AESSOP and Aspire To Thrive
+[ganymede.amadeusweb.in](https://ganymede.amadeusweb.in/) - specifically AESSOP and Aspire To Thrive.
 
 The first 2 programs of Aessop we piloted in small parent led Montessori school with a batch of 8 adolescents in 2021/22.
 
-In March 2026, a friend asked me for some material for approaching some parents/neighbours. They couldnt align with the self driven aspects and he concluded this would work best in a Homeschooling environment.
+In March 2026, a friend asked me for some material for approaching some parents/neighbours. They couldn't align with the self driven aspects and he concluded this would work best in a Homeschooling environment.<!--more-->
 
-* [https://ganymede.amadeusweb.in/friends/imran/](https://ganymede.amadeusweb.in/friends/imran)
+* [https://ganymede.amadeusweb.in/friends/imran/](https://ganymede.amadeusweb.in/friends/imran/)
 * [https://ganymede.amadeusweb.in/sessions/introspection/](https://ganymede.amadeusweb.in/sessions/introspection/)
 
 I am happy to learn more about your work / try and become a publisher / tech coordination and DAWN adoption etc. I suggest we
