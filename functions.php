@@ -231,6 +231,35 @@ function printPiece($item, $where, $xofy = false, $relative = '') {
 	if ($where == 'embed') renderAny($item['File']);
 }
 
+function registerPieces($pieces) {
+	$page = getPageParameters('', false);
+	foreach ($pieces as $node => $items) {
+		if ($page != $node) continue;
+
+		$sheet = sitemapTsv::read('Name');
+
+		foreach ($items as $key => $name) {
+			if (is_string($key)) {
+				$section = textUtil::first($name);
+				$link = substr($name, strlen($section) + 1, - 1 - strlen(pathinfo($name, PATHINFO_EXTENSION)));
+				$html = getLink(humanize(textUtil::last($link)), pageUrl($link)) . renderAny(SITEPATH . '/' . $name, [VAREcho => false]);
+			} else {
+				if (!isset($sheet->group[$name]))
+					continue;
+
+				$key = $name . 'Piece';
+				$item = $sheet->enrichedPiece($sheet->group[$name][0]);
+				doToBuffering(1);
+				printPiece($item, 'embed');
+				$html = doToBuffering(2);
+				doToBuffering(3);
+			}
+
+			variableAppend(replacer::secondPassVar, [], $key, $html);
+		}
+	}
+}
+
 function _getTaxonomyText($val, $type) {
 	$sheet = getSheet('taxonomy', 'type');
 	$groupKey = 'types_' . $type;
