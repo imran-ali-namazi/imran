@@ -1,0 +1,20 @@
+|is-table
+||head-columns: Title
+||use-datatables: yes
+||use-render-any: yes
+||classes: table-wants-filter
+||Title_heading: Title / Embed / Description / Search
+||Title_format: %SNo% [%Title%](https://drive.google.com/file/d/%File%) | %Date%<br />[%Type%]%File%[/%Type%]<br />%Description% <br /> Searches: [Site](#search=%Title_urlsafe%) | [Google](#google=%Search_urlsafe%+Mother+Sri+Aurobindo) | [YouTube](#youtube=%Search_urlsafe%+Mother+Sri+Aurobindo) <br /> [%Search%](#search=%Search_urlsafe%)
+#SNo	Title	Date	Type	File	Search	Description
+
+010	Romantic Evolution - from Eros to Agape	24 Nov	google-audio	1B7rtFn5P-YkfNfY1a4sK08K0ty3ttJhu		
+009	How Sexual Adequacy Cures Modern Burnout	24 Nov	google-audio	1CYTuaPnizWo-EjuaRE-i5Xr2vPR3gGjE		
+008	Reclaiming Intimacy - Sacred Eros	24 Nov	google-video	1gzkPOi5hVR-iGHh8BACIp1Jl7lJWkv8l		
+007	Blueprints for Building a Modern Utopia	24 Nov	google-audio	1w104CMiNmz24UTsHABKrBiHRZJfm2lCc		
+006	How Integral Living Powers World Peace	24 Nov	google-audio	1ax6AfrF0d0qS2dmQttUE8zgW15p-PrDc		
+
+005	Cosmic Healing for a Fractured World	24 Nov	google-audio	1brK4IFAZrPTIlzsQmgcJaGbZGjn5enLl		
+004	Dragging Heaven Down into the Mud	24 Nov	google-audio	1346ffeTYop7lHgbR4Fx5nOfdLwSgNVb0		
+003	The Dawn of Integral Living	24 Nov	google-video	1a57KcXmbIs3uBAW19GANbeLyPBoNaYGc		
+002	A Blueprint for Integral Living	24 Nov	google-audio	1rVrilV8ggikOSTiy4SQEf5fi3-T8hiSk		
+001	Integral Healing - Building the World Family	24 Nov	google-audio	14EaxkOsDp3uV439fI5pjmY1d3RZeGl8v	list of keywords	Describes the ___

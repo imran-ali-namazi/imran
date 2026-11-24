@@ -9,8 +9,10 @@ variable(TAXONOMY, [
 ]);
 
 class special {
+	const sitemap = 'sitemap';
+
 	const All = [
-		'sitemap' => [
+		self::sitemap => [
 			['slug' => 'integral-living', 'description' => 'Ingredients for a Better World'],
 		],
 		'for' => [
@@ -67,8 +69,10 @@ class special {
 	static function matchesWork($piece) {
 		$tax = variable(TAXONOMY);
 		foreach (self::All as $thisTax => $items) {
+			$field = $thisTax == self::sitemap ? 'Name' : $tax[$thisTax];
 			foreach ($items as $item) {
-				$name = $piece[$tax[$thisTax]];
+				if (!isset($item['in'])) continue;
+				$name = $piece[$field];
 				if (in_array($name, $item['in']))
 					return self::enrich($item, $thisTax);
 			}
@@ -96,7 +100,7 @@ class special {
 					if ($node != 'all' && $thisTax != $node)
 						continue;
 
-					if ($thisTax == 'sitemap') {
+					if ($thisTax == self::sitemap) {
 						$tax = false;
 						$result = $item;
 						if (!isset($item['in']))
