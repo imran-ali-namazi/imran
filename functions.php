@@ -10,6 +10,9 @@ variable(TAXONOMY, [
 
 class special {
 	const All = [
+		'sitemap' => [
+			['slug' => 'integral-living', 'description' => 'Ingredients for a Better World'],
+		],
 		'for' => [
 			['slug' => 'divine', 'in' => ['God', 'MSA']],
 			['slug' => 'preceptors', 'in' => ['Uma', 'Shayesteh', 'Vasantha', 'Vichu', 'Mir Momin Ali', 'Asha P', 'Vijaya', 'SKY', 'Raji', 'Jyothi']],
@@ -39,7 +42,7 @@ class special {
 		}
 
 		$suffix = '';
-		if ($result) {
+		if ($result && $result['Slug']) {
 			if (!$name) $name = humanize(getPageParameterAt());
 			$slug = $result['Slug'];
 			$items = [variable(TAXONOMY)[$slug] . ': '];
@@ -93,7 +96,12 @@ class special {
 					if ($node != 'all' && $thisTax != $node)
 						continue;
 
-					if (in_array($name, $item['in'])) {
+					if ($thisTax == 'sitemap') {
+						$tax = false;
+						$result = $item;
+						if (!isset($item['in']))
+							$result['in'] = self::getIn($on);
+					} else if (in_array($name, $item['in'])) {
 						$tax = $thisTax;
 						$result = $item;
 					}
@@ -109,9 +117,20 @@ class special {
 		return $result;
 	}
 
-	private static function enrich(&$result, $tax) {
+	private static function enrich(&$result, $tax = false) {
 		$result['Slug'] = $tax;
-		$result['Field'] = variable(TAXONOMY)[$tax];
+		$result['Field'] = $tax ? variable(TAXONOMY)[$tax] : 'Name';
+		return $result;
+	}
+
+	private static function getIn($name) {
+		$sheet = getSheet('special', false);
+		$result = [];
+		foreach ($sheet->rows as $item) {
+			$csv = explode(', ', $sheet->getValue($item, 'CollectionCSV'));
+			if (!in_array($name, $csv)) continue;
+			$result[] = $sheet->getValue($item, 'Name');
+		}
 		return $result;
 	}
 }
